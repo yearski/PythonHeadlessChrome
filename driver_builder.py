@@ -8,7 +8,8 @@ from selenium.webdriver.chrome import webdriver as chrome_webdriver
 class DriverBuilder():
     def get_driver(self, download_location=None, headless=False):
 
-        driver = self._get_chrome_driver(download_location, headless)
+        driver_path = '/usr/lib/chromium/chromedriver'
+        driver = self._get_chrome_driver(download_location, headless, driver_path)
 
         driver.set_window_size(1400, 700)
 
@@ -28,11 +29,12 @@ class DriverBuilder():
         if headless:
             chrome_options.add_argument("--headless")
 
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        driver_path = os.path.join(dir_path, "drivers/chromedriver")
+        if not os.path.isfile(driver_path):
+            dir_path = os.path.dirname(os.path.realpath(__file__))
+            driver_path = os.path.join(dir_path, "drivers/chromedriver")
 
-        if sys.platform.startswith("win"):
-            driver_path += ".exe"
+            if sys.platform.startswith("win"):
+                driver_path += ".exe"
 
         driver = Chrome(executable_path=driver_path, chrome_options=chrome_options)
 
