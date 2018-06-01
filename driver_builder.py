@@ -11,7 +11,7 @@ class DriverBuilder():
         driver_path = '/usr/lib/chromium/chromedriver'
         driver = self._get_chrome_driver(download_location, headless, driver_path)
 
-        driver.set_window_size(1400, 700)
+        driver.set_window_size(1920, 1080)
 
         return driver
 
